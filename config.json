@@ -2,7 +2,7 @@
   "title": "AdForm DMP extractor",
   "type": "object",
   "properties": {
-    "#apiKey": "",
+    "apiKey": "",
     "dateTo": {
       "type": "string",
       "description": "Date in format YYYY-MM-DD",
