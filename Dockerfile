@@ -1,18 +1,12 @@
-FROM php:7.1-cli
+FROM quay.io/keboola/docker-custom-r:1.5.2
 
-WORKDIR /code
+WORKDIR /home
 
-RUN apt-get update && apt-get install -y \
-        git \
-        unzip \
-   --no-install-recommends && rm -r /var/lib/apt/lists/*
+# Initialize the transformation runner
+COPY . /home/
 
-RUN curl -sS https://getcomposer.org/installer | php \
-  && mv /code/composer.phar /usr/local/bin/composer
+# Install some commonly used R packages and the R application
+RUN Rscript ./init.R
 
-COPY . /code/
-COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
-
-RUN composer install
-
-CMD php /code/run.php --data=/data
+# Run the application
+ENTRYPOINT Rscript ./main.R /data/
