@@ -15,4 +15,3 @@ deploy:
   script: " ./deploy.sh"
   on:
      tags: true
-     all_branches: true
