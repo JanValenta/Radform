@@ -1,18 +1,14 @@
-sudo: required
 language: bash
+
 services:
   - docker
-before_script:
-- docker-compose build adform
-script: docker-compose run --rm --entrypoint sh -e KBC_DATA_DIR=/code/tests/data/
-   adform /code/run_tests.sh
-  
-after_success:
-- docker images
+
+script:
+  - docker build --tag=${APP_IMAGE} .
+
 deploy:
   provider: script
   skip_cleanup: true
   script: ./deploy.sh
   on:
-     tags: true
-     all_branches: true
+    tags: true
